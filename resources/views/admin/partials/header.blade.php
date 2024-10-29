@@ -42,52 +42,43 @@
           </a>
         </div>
       </li>
-      <li class="nav-item dropdown user-menu">
-        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-          <img
-            src="../../../dist/assets/img/user2-160x160.jpg"
-            class="user-image rounded-circle shadow"
-            alt="User Image"
-          />
-          <span class="d-none d-md-inline">Alexander Pierce</span>
-        </a>
-        <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-          <!-- User image -->
-          <li class="user-header text-bg-primary">
-            <img
-              src="../../../dist/assets/img/user2-160x160.jpg"
-              class="rounded-circle shadow"
-              alt="User Image"
-            />
-
+<!-- Tampilkan Username dan Profile Picture Admin -->
+<li class="nav-item dropdown user-menu">
+    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+       <img src="{{ asset('images/' . ($admin->profile_picture ?? 'default-profile.png')) }}"
+     class="user-image rounded-circle" alt="User Image"/>
+        <span class="d-none d-md-inline">{{ $admin->name }}</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+        <!-- User image -->
+        <li class="user-header text-bg-primary">
+           <img src="{{ asset('images/' . ($admin->profile_picture ?? 'default-profile.png')) }}"
+     class="user-image rounded-circle shadow" alt="User Image"/>
             <p>
-              Alexander Pierce - Web Developer
-              <small>Member since Nov. 2023</small>
+                {{ $admin->username }} - Administrasi
+                <small>Member since {{ $admin->created_at->format('d M Y, H:i') }}</small>
             </p>
-          </li>
-          <!-- Menu Body -->
-          <li class="user-body">
-            <!--begin::Row-->
-            <div class="row">
-              <div class="col-4 text-center">
-                <a href="#">Followers</a>
-              </div>
-              <div class="col-4 text-center">
-                <a href="#">Sales</a>
-              </div>
-              <div class="col-4 text-center">
-                <a href="#">Friends</a>
-              </div>
-            </div>
-            <!--end::Row-->
-          </li>
-          <!-- Menu Footer-->
-          <li class="user-footer">
-            <a href="#" class="btn btn-default btn-flat">Profile</a>
-            <a href="#" class="btn btn-default btn-flat float-end">Sign out</a>
-          </li>
-        </ul>
+        </li>
+        <!-- Menu Footer-->
+        <li class="user-footer">
+          <!-- Tombol Profile dan Logout dengan Border -->
+<a href="{{ route('profile') }}" class="btn btn-outline-secondary btn-flat border">
+  <i class="fas fa-user"></i> Profil
+</a>
+<a href="{{ route('logout') }}" class="btn btn-outline-secondary btn-flat border float-end" 
+ onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+  <i class="fa fa-fw fa-power-off"></i> Keluar
+</a>
       </li>
+
+      <!-- Form Logout -->
+      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+          @csrf
+      </form>
+
+    </ul>
+</li>
+
     </ul>
   </div>
   <!--end::Container-->

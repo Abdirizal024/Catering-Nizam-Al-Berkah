@@ -22,56 +22,63 @@
         </div>
     </div>
 
-    <!-- Statistik Jumlah Menu, Pesanan, Admin -->
-    <div class="row mt-4">
-        <!-- Jumlah Menu -->
-        <div class="col-lg-4 col-6">
-            <div class="small-box bg-info">
-                <div class="inner">
+<!-- Statistik Jumlah Menu, Pesanan, Admin -->
+<div class="row mt-4">
+    <!-- Jumlah Menu -->
+    <div class="col-lg-4 col-6">
+        <div class="small-box bg-info d-flex flex-column justify-content-between h-100">
+            <div class="d-flex align-items-center justify-content-between p-3">
+                <div>
                     <h3>{{ $menuCount }}</h3> <!-- Jumlah Menu -->
                     <p>Jumlah Menu</p>
                 </div>
                 <div class="icon">
                     <i class="fas fa-utensils" style="font-size: 4rem;"></i> <!-- Ikon untuk Menu -->
                 </div>
-                <a href="{{ route('admin.menu') }}" class="small-box-footer">
-                    Lihat Menu <i class="fas fa-arrow-circle-right"></i>
-                </a>
             </div>
+            <a href="{{ route('admin.menu') }}" class="small-box-footer d-block text-center p-2" style="background-color: rgba(0,0,0,0.1); color: white;">
+                Lihat Menu <i class="fas fa-arrow-circle-right"></i>
+            </a>
         </div>
+    </div>
 
-        <!-- Jumlah Pesanan -->
-        <div class="col-lg-4 col-6">
-            <div class="small-box bg-success">
-                <div class="inner">
+    <!-- Jumlah Pesanan -->
+    <div class="col-lg-4 col-6">
+        <div class="small-box bg-success d-flex flex-column justify-content-between h-100">
+            <div class="d-flex align-items-center justify-content-between p-3">
+                <div>
                     <h3>{{ $orderCount }}</h3> <!-- Jumlah Pesanan -->
                     <p>Jumlah Pesanan</p>
                 </div>
                 <div class="icon">
-                    <i class="fas fa-shopping-cart"></i> <!-- Ikon untuk Pesanan -->
+                    <i class="fas fa-shopping-cart" style="font-size: 4rem;"></i> <!-- Ikon untuk Pesanan -->
                 </div>
-                <a href="{{ route('transaksi') }}" class="small-box-footer">
-                    Lihat Pesanan <i class="fas fa-arrow-circle-right"></i>
-                </a>
             </div>
+            <a href="{{ route('transaksi') }}" class="small-box-footer d-block text-center p-2" style="background-color: rgba(0,0,0,0.1); color: white;">
+                Lihat Pesanan <i class="fas fa-arrow-circle-right"></i>
+            </a>
         </div>
+    </div>
 
-        <!-- Jumlah Admin -->
-        <div class="col-lg-4 col-6">
-            <div class="small-box bg-warning">
-                <div class="inner">
+    <!-- Jumlah Admin -->
+    <div class="col-lg-4 col-6">
+        <div class="small-box bg-warning d-flex flex-column justify-content-between h-100">
+            <div class="d-flex align-items-center justify-content-between p-3">
+                <div>
                     <h3>{{ $adminCount }}</h3> <!-- Jumlah Admin -->
                     <p>Jumlah Admin</p>
                 </div>
                 <div class="icon">
-                    <i class="fas fa-user-shield"></i> <!-- Ikon untuk Admin -->
+                    <i class="fas fa-user-shield" style="font-size: 4rem;"></i> <!-- Ikon untuk Admin -->
                 </div>
-                <a href="{{ route('profil') }}" class="small-box-footer">
-                    Lihat Admin <i class="fas fa-arrow-circle-right"></i>
-                </a>
             </div>
+            <a href="{{ route('data.admin') }}" class="small-box-footer d-block text-center p-2" style="background-color: rgba(0,0,0,0.1); color: white;">
+                Lihat Admin <i class="fas fa-arrow-circle-right"></i>
+            </a>
         </div>
     </div>
+</div>
+
 @endsection
 
 

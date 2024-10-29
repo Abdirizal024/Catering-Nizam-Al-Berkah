@@ -36,13 +36,18 @@ return [
     */
 
 'guards' => [
-    // Guard Admin
+    // Guard default
+    'web' => [
+        'driver' => 'session',
+        'provider' => 'users',
+    ],
+
+    // Guard admin
     'admin' => [
         'driver' => 'session',
         'provider' => 'admins',
     ],
 ],
-
     /*
     |--------------------------------------------------------------------------
     | User Providers
@@ -60,8 +65,13 @@ return [
     |
     */
 
- 'providers' => [
-    // Provider Admin
+'providers' => [
+    'users' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\User::class,
+    ],
+
+    // Provider untuk admin
     'admins' => [
         'driver' => 'eloquent',
         'model' => App\Models\Admin::class,

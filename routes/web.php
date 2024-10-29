@@ -22,9 +22,20 @@ Route::get('/admin/register', [AdminController::class, 'register'])->name('regis
 Route::post('/admin/register', [AdminController::class, 'register_proses'])->name('admin.register');
 Route::get('/admin/login', [AdminController::class, 'login'])->name('login');
 Route::post('/admin/login', [AdminController::class, 'login_proses'])->name('admin.login');
+// Route untuk dashboard admin
+Route::middleware('auth:admin')->group(function() {
 Route::get('/admin', [AdminController::class, 'index'])->name('admin');
-Route::get('/admin/profil', [AdminController::class, 'profil'])->middleware('auth')->name('profil');
-Route::get('/admin/dataadmin', [AdminController::class, 'data_admin'])->name('data.admin');
+Route::get('/admin/profile', [AdminController::class, 'profile'])->name('profile');
+Route::put('/profile/update', [AdminController::class, 'updateProfile'])->name('profile.update');
+Route::put('/profile/password', [AdminController::class, 'updatePassword'])->name('password.update');
+
+});
+Route::get('/admin/data-admin', [AdminController::class, 'data_admin'])->name('data.admin');
+Route::get('/admin/create', [AdminController::class, 'admin_create'])->name('admin.create');
+    Route::post('/admin', [AdminController::class, 'admin_store'])->name('admin.store');
+    Route::get('/admin/{id}/edit', [AdminController::class, 'admin_edit'])->name('admin.edit');
+    Route::put('/admin/{id}', [AdminController::class, 'admin_update'])->name('admin.update');
+    Route::delete('/admins/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
 Route::get('/admin/kontak', [AdminController::class, 'kontak'])->name('kontak');
 Route::put('/admin/kontak/{id}', [AdminController::class, 'update_kontak'])->name('update.kontak');
 Route::get('/admin/menu', [AdminController::class, 'menu'])->name('admin.menu');

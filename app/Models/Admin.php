@@ -9,7 +9,7 @@ class Admin extends Authenticatable
     protected $table = 'admin';  // Menyebutkan tabel yang digunakan
 
     protected $fillable = [
-        'username', 'password',
+        'name', 'email', 'username', 'password', 'profile_picture',
     ];
 
     protected $hidden = [

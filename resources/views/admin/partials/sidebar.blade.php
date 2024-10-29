@@ -43,7 +43,7 @@
               </a>
           </li>
 
-          <!-- Kontak -->
+          {{-- <!-- Kontak -->
           <li class="nav-item">
               <a href="{{ route('kontak') }}" class="nav-link {{ request()->is('admin/kontak') ? 'active' : '' }}">
                   <i class="nav-icon bi bi-envelope"></i> <!-- Kontak: ikon amplop -->
@@ -51,11 +51,11 @@
                       Kontak
                   </p>
               </a>
-          </li>
+          </li> --}}
 
           <!-- Data Admin -->
           <li class="nav-item">
-              <a href="{{ route('data.admin') }}" class="nav-link {{ request()->is('admin/dataadmin') ? 'active' : '' }}">
+              <a href="{{ route('data.admin') }}" class="nav-link {{ request()->is('admin/admin') ? 'active' : '' }}">
                   <i class="nav-icon fa-solid fa-user-tie"></i> <!-- Data Admin: ikon orang -->
                   <p>
                       Data Admin
@@ -67,7 +67,7 @@
 
           <!-- Pengaturan Akun -->
           <li class="nav-item">
-              <a href="{{ route('profil') }}" class="nav-link {{ request()->is('admin/profil') ? 'active' : '' }}">
+              <a href="{{ route('profile') }}" class="nav-link {{ request()->is('admin/profile') ? 'active' : '' }}">
                   <i class="nav-icon bi bi-person-circle"></i> <!-- Pengaturan Akun: ikon akun -->
                   <p>
                       Pengaturan Akun
@@ -81,7 +81,7 @@
               @csrf
               <button type="submit" class="nav-link text-end"> <!-- Tambahkan text-end untuk menggeser ke kanan -->
                   <i class="nav-icon fas fa-sign-out-alt"></i> <!-- Logout: Font Awesome icon for sign out -->
-                  <p>Logout</p>
+                  <p>Keluar</p>
               </button>
           </form>
       </li>
