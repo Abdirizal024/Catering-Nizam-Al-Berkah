@@ -74,14 +74,23 @@ Password : admin
 🤝 Kontribusi
 Kami terbuka untuk kontribusi! Silakan fork repository ini dan buat pull request.
 
+
+📝 Lisensi
+Proyek ini menggunakan MIT License.
+
+
+💡 Tips: Pastikan selalu memperbarui dependensi dengan composer update dan npm update.
+
+
 ## 📱 Ikuti Kami di Media Sosial Tetap terhubung dan ikuti perkembangan proyek kami di media sosial :
 
 <div align="center">
   
 [![Facebook](https://img.shields.io/badge/Facebook-%231877F2.svg?style=for-the-badge&logo=Facebook&logoColor=white)](https://facebook.com/YourPageName)
 [![Twitter](https://img.shields.io/badge/Twitter-%231DA1F2.svg?style=for-the-badge&logo=Twitter&logoColor=white)](https://twitter.com/YourTwitterHandle)
-[![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?style=for-the-badge&logo=Instagram&logoColor=white)](https://instagram.com/abdi.rizal.022)
-[![WhatsApp](https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/6285654800639)
+[![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?style=for-the-badge&logo=Instagram&logoColor=white)](https://instagram.com/YourInstagram)
+[![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/YourLinkedIn)
+[![WhatsApp](https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/YourPhoneNumber)
 
 </div>
 
@@ -99,9 +108,3 @@ Follow us and join our community for:
 <div align="center">
   <sub>Made with ❤️ by Abdi</sub>
 </div>
-
-📝 Lisensi
-Proyek ini menggunakan MIT License.
-
-
-💡 Tips: Pastikan selalu memperbarui dependensi dengan composer update dan npm update.
