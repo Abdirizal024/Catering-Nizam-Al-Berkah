@@ -22,6 +22,7 @@
 					<h2 class="heading-section">Login Admin</h2>
 				</div>
 			</div>
+			
 			<div class="row justify-content-center">
 				<div class="col-md-6 col-lg-4">
 					<div class="login-wrap p-0">

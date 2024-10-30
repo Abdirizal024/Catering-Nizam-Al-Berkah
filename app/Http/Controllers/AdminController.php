@@ -99,90 +99,106 @@ $user->save();
         return view('admin.admin', compact('admin','admins'));
     }
 
-      // Menampilkan form untuk membuat admin baru
-      public function admin_create()
+      // Tampilkan form untuk menambahkan admin baru
+      public function adminCreate()
       {
-          return view('admin.create'); // Ganti dengan view untuk membuat admin
+        $admin = Auth::guard('admin')->user(); // Mendapatkan admin yang sedang login
+
+          return view('admin.tambah_admin', compact('admin'));
       }
-  
-      // Menyimpan admin baru ke database
-      public function admin_store(Request $request)
+
+      public function adminStore(Request $request)
       {
-          $request->validate([
+          // Validasi input
+          $validatedData = $request->validate([
               'name' => 'required|string|max:255',
-              'username' => 'required|string|max:255|unique:admins',
-              'email' => 'required|string|email|max:255|unique:admins',
-              'password' => 'required|string|min:8|confirmed',
-              'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi gambar profil
+              'email' => 'required|email|unique:admin',
+              'username' => 'required|string|unique:admin|max:255',
+              'password' => 'required|string|min:8',
+              'profile_picture' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
           ]);
-  
-          $admin = new Admin();
-          $admin->name = $request->name;
-          $admin->username = $request->username;
-          $admin->email = $request->email;
-          $admin->password = bcrypt($request->password);
-  
-          // Menyimpan gambar profil jika ada
+      
+          // Hash password
+          $validatedData['password'] = Hash::make($validatedData['password']);
+      
+          // Cek apakah ada gambar yang diupload
           if ($request->hasFile('profile_picture')) {
-              $imageName = time().'.'.$request->profile_picture->extension();
-              $request->profile_picture->move(public_path('images'), $imageName);
-              $admin->profile_picture = $imageName;
+              $gambarPath = $request->file('profile_picture')->store('images', 'public');
+              $validatedData['profile_picture'] = $gambarPath;
+          } else {
+              // Set gambar default jika tidak ada gambar yang diupload
+              $validatedData['profile_picture'] = 'default-admin2.png';
           }
-  
-          $admin->save();
-  
+      
+          // Simpan data admin ke database
+          Admin::create($validatedData);
+      
+          // Redirect ke halaman daftar admin dengan pesan sukses
           return redirect()->route('admin.index')->with('success', 'Admin berhasil ditambahkan!');
       }
-  
-      // Menampilkan form untuk mengedit admin
-      public function admin_edit($id)
+      
+
+      // Tampilkan form edit admin
+      public function adminEdit($id)
       {
+        $admin = Auth::guard('admin')->user(); // Mendapatkan admin yang sedang login
           $admin = Admin::findOrFail($id);
-          return view('admin.edit', compact('admin')); // Ganti dengan view untuk mengedit admin
+          return view('admin.edit_admin', compact('admin'));
       }
-  
-      // Mengupdate admin yang ada
-      public function admin_update(Request $request, $id)
+
+      // Perbarui data admin
+      public function adminUpdate(Request $request, $id)
       {
           $admin = Admin::findOrFail($id);
-  
-          $request->validate([
+
+          // Validasi input
+          $validatedData = $request->validate([
               'name' => 'required|string|max:255',
-              'username' => 'required|string|max:255|unique:admins,username,' . $admin->id,
-              'email' => 'required|string|email|max:255|unique:admins,email,' . $admin->id,
-              'password' => 'nullable|string|min:8|confirmed',
-              'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+              'email' => 'required|email|unique:admin,email,' . $admin->id,
+              'username' => 'required|string|unique:admin,username,' . $admin->id . '|max:50',
+              'password' => 'nullable|string|min:6|confirmed',
+              'profile_picture' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
           ]);
-  
-          $admin->name = $request->name;
-          $admin->username = $request->username;
-          $admin->email = $request->email;
-  
-          if ($request->password) {
-              $admin->password = bcrypt($request->password);
+
+          // Hash password jika ada perubahan password
+          if ($request->filled('password')) {
+              $validatedData['password'] = Hash::make($request->password);
           }
-  
+
+          // Jika ada file gambar baru diupload, hapus gambar lama dan simpan yang baru
           if ($request->hasFile('profile_picture')) {
-              $imageName = time().'.'.$request->profile_picture->extension();
-              $request->profile_picture->move(public_path('images'), $imageName);
-              $admin->profile_picture = $imageName;
+              if ($admin->profile_picture) {
+                  Storage::disk('public')->delete($admin->profile_picture);
+              }
+              $profilePicturePath = $request->file('profile_picture')->store('images', 'public');
+              $validatedData['profile_picture'] = $profilePicturePath;
           }
-  
-          $admin->save();
-  
+
+          // Update data admin
+          $admin->update($validatedData);
+
+          // Redirect ke halaman daftar admin dengan pesan sukses
           return redirect()->route('admin.index')->with('success', 'Admin berhasil diperbarui!');
       }
-  
-      // Menghapus admin
+
+      // Hapus data admin
       public function destroy($id)
       {
           $admin = Admin::findOrFail($id);
+
+          // Hapus gambar profil jika ada
+          if ($admin->profile_picture) {
+              Storage::disk('public')->delete($admin->profile_picture);
+          }
+
+          // Hapus data admin dari database
           $admin->delete();
-  
+
+          // Redirect ke halaman daftar admin dengan pesan sukses
           return redirect()->route('admin.index')->with('success', 'Admin berhasil dihapus!');
       }
 
-    public function create_admin()
+    public function create()
     {
         $admin = Auth::guard('admin')->user(); // Mendapatkan admin yang sedang login
 
@@ -298,19 +314,25 @@ $user->save();
 
 
     public function login_proses(Request $request)
-    {
-        $credentials = $request->validate([
-            'username' => 'required',
-            'password' => 'required',
-        ]);
+{
+    // Validasi input
+    $credentials = $request->validate([
+        'username' => 'required|string',
+        'password' => 'required|string',
+    ]);
 
-        if (Auth::guard('admin')->attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect()->intended(route('admin'));
-        }
-
-        return back()->with('loginError', 'Login Failed!');
+    // Proses login dengan guard admin
+    if (Auth::guard('admin')->attempt(['username' => $credentials['username'], 'password' => $credentials['password']])) {
+        $request->session()->regenerate();
+        return redirect()->intended(route('admin'))->with('success', 'Berhasil login!');
     }
+
+    // Jika gagal login
+    return back()->withErrors([
+        'loginError' => 'Username atau password salah!',
+    ]);
+}
+
 
     public function logout()
     {

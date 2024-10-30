@@ -13,12 +13,11 @@ return new class extends Migration
     {
         Schema::create('admin', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
-            $table->string('email')->unique()->nullable();
-            $table->string('username');
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->string('username')->unique();
             $table->string('password');
-            $table->string('profile_picture')->nullable(); // Kolom untuk menyimpan gambar profil
-            $table->rememberToken();
+            $table->string('profile_picture')->nullable();
             $table->timestamps();
         });
     }

@@ -53,6 +53,12 @@
                         @if($admins->isEmpty())
                             <p class="text-center">Tidak ada admin tersedia.</p>
                         @else
+                        <div class="col-md-12 mt-3 text-end">
+                          <!-- Tombol Tambah Menu -->
+                          <a href="{{ route('admin.tambah') }}" class="btn btn-primary">
+                              <i class="fas fa-plus"></i> Tambah Admin
+                          </a>
+                      </div>                      
                             <div class="table-responsive">
                                 <table id="admin-table" class="table table-bordered table-hover">
                                     <thead>

@@ -44,7 +44,7 @@
   <div class="card-header">
       <h3 class="card-title pt-1">PAKET CATERING NIZAM AL-BERKAH</h3>
   </div>
-  <div class="col-md-12 mt-3">
+  <div class="col-md-12 mt-3 text-end">
     <!-- Tombol Tambah Menu -->
     <a href="{{ route('tambah.menu') }}" class="btn btn-primary">
         <i class="fas fa-plus"></i> Tambah Menu

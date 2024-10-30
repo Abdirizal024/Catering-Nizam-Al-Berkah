@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('position')->nullable(); // Kolom position
             $table->string('image')->nullable(); // Kolom image
             $table->integer('rating'); // Kolom rating
-            $table->text('testimoni'); // Kolom testimonial
+            $table->text('testimonial'); // Kolom testimonial
             $table->timestamps(); // Kolom created_at dan updated_at
         });
     }

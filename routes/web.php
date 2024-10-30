@@ -31,10 +31,10 @@ Route::put('/profile/password', [AdminController::class, 'updatePassword'])->nam
 
 });
 Route::get('/admin/data-admin', [AdminController::class, 'data_admin'])->name('data.admin');
-Route::get('/admin/create', [AdminController::class, 'admin_create'])->name('admin.create');
-    Route::post('/admin', [AdminController::class, 'admin_store'])->name('admin.store');
-    Route::get('/admin/{id}/edit', [AdminController::class, 'admin_edit'])->name('admin.edit');
-    Route::put('/admin/{id}', [AdminController::class, 'admin_update'])->name('admin.update');
+Route::get('/admin/create', [AdminController::class, 'adminCreate'])->name('admin.tambah');
+    Route::post('/admin', [AdminController::class, 'adminStore'])->name('admin.store');
+    Route::get('/admin/{id}/edit', [AdminController::class, 'adminEdit'])->name('admin.edit');
+    Route::put('/admin/{id}', [AdminController::class, 'adminUpdate'])->name('admin.update');
     Route::delete('/admins/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
 Route::get('/admin/kontak', [AdminController::class, 'kontak'])->name('kontak');
 Route::put('/admin/kontak/{id}', [AdminController::class, 'update_kontak'])->name('update.kontak');
