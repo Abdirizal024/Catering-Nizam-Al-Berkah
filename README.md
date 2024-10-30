@@ -74,12 +74,7 @@ Password : admin
 🤝 Kontribusi
 Kami terbuka untuk kontribusi! Silakan fork repository ini dan buat pull request.
 
-📱 Ikuti Kami di Media Sosial
-Tetap terhubung dan ikuti perkembangan proyek kami di media sosial:
-Facebook https://facebook.com/abdi.rizal.022:star:
-Twitter :bird:
-Instagram :camera:
-LinkedIn :briefcase:
+
 
 📝 Lisensi
 Proyek ini menggunakan MIT License.
