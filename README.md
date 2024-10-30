@@ -14,10 +14,9 @@
 
 ## 🔧 Persyaratan
 Sebelum memulai, pastikan perangkat Anda telah memenuhi persyaratan berikut:
-- **PHP** >= 7.3
+- **PHP** >= 8.2
 - **Composer** >= 2.0
 - **MySQL** >= 5.7
-- **Node.js** >= 12.x dan **npm** >= 6.x
 - **Git** (opsional)
 
 ## 📦 Instalasi Langkah-demi-Langkah
@@ -45,8 +44,8 @@ php artisan key:generate
 php artisan migrate --seed
 ```
 Buat database baru di MySQL, contohnya catering_db.
+Konfigurasikan database pada file ```.env``` seperti berikut:
 ```
-Konfigurasikan database pada file .env seperti berikut:
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
@@ -68,8 +67,8 @@ Admin Dashboard	Halaman Pesanan
 Setelah proses seeding, gunakan akun default berikut untuk login:
 
 ```
-Username : ```admin```
-Password : ```admin```
+Username : admin
+Password : admin
 ```
 
 📚 Panduan Deployment
@@ -82,6 +81,13 @@ Jalankan php artisan migrate --force untuk update database.
 
 🤝 Kontribusi
 Kami terbuka untuk kontribusi! Silakan fork repository ini dan buat pull request.
+
+📱 Ikuti Kami di Media Sosial
+Tetap terhubung dan ikuti perkembangan proyek kami di media sosial:
+Facebook :star:
+Twitter :bird:
+Instagram :camera:
+LinkedIn :briefcase:
 
 📝 Lisensi
 Proyek ini menggunakan MIT License.
