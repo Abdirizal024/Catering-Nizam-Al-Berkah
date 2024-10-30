@@ -31,6 +31,7 @@ cd Catering-Nizam-Al-Berkah
 composer install
 cp .env.example .env
 php artisan key:generate
+bash
 php artisan migrate --seed
 
 
