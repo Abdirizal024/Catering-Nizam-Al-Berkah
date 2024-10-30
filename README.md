@@ -71,23 +71,15 @@ Username : admin
 Password : admin
 ```
 
-📚 Panduan Deployment
-Untuk deployment ke server produksi, pastikan untuk:
-
-Set konfigurasi .env dengan benar.
-Jalankan composer install --optimize-autoloader --no-dev.
-Jalankan php artisan config:cache && php artisan route:cache.
-Jalankan php artisan migrate --force untuk update database.
-
 🤝 Kontribusi
 Kami terbuka untuk kontribusi! Silakan fork repository ini dan buat pull request.
 
-📱 Ikuti Kami di Media Sosial
+📱 Ikuti Kami di Media Sosial.
 Tetap terhubung dan ikuti perkembangan proyek kami di media sosial:
-Facebook :star:
-Twitter :bird:
-Instagram :camera:
-LinkedIn :briefcase:
+Facebook :star:.
+Twitter :bird:.
+Instagram :camera:.
+LinkedIn :briefcase:.
 
 📝 Lisensi
 Proyek ini menggunakan MIT License.
