@@ -27,8 +27,13 @@ Clone repository ini ke dalam komputer Anda:
 
 ```bash
 git clone https://github.com/Abdirizal024/Catering-Nizam-Al-Berkah.git
+```
+```
 cd Catering-Nizam-Al-Berkah
+```
+```
 composer install
+```
 cp .env.example .env
 php artisan key:generate
 bash
