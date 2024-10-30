@@ -29,17 +29,22 @@ Clone repository ini ke dalam komputer Anda:
 git clone https://github.com/Abdirizal024/Catering-Nizam-Al-Berkah.git
 ```
 ```
-cd Catering-Nizam-Al-Berkah
+cd catering
 ```
 ```
 composer install
 ```
+```
 cp .env.example .env
+```
+```
 php artisan key:generate
-bash
+```
+```
 php artisan migrate --seed
-
+```
 Buat database baru di MySQL, contohnya catering_db.
+```
 Konfigurasikan database pada file .env seperti berikut:
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
@@ -47,9 +52,12 @@ DB_PORT=3306
 DB_DATABASE=db_catering_nizam
 DB_USERNAME=root
 DB_PASSWORD=your_password
+```
 
 Jalankan server Laravel di alamat http://127.0.0.1:8000:
+```
 php artisan serve
+```
 
 🖼️ Screenshots
 
@@ -58,8 +66,8 @@ Admin Dashboard	Halaman Pesanan
 🔐 User dan Admin Default
 Setelah proses seeding, gunakan akun default berikut untuk login:
 
-Ussername : admin
-Password : admin
+Username : ```admin```
+Password : ```admin```
 
 📚 Panduan Deployment
 Untuk deployment ke server produksi, pastikan untuk:
