@@ -27,14 +27,10 @@ Clone repository ini ke dalam komputer Anda:
 
 ```bash
 git clone https://github.com/Abdirizal024/Catering-Nizam-Al-Berkah.git
-```bash
 cd Catering-Nizam-Al-Berkah
-```bash
 composer install
 cp .env.example .env
-```bash
 php artisan key:generate
-```bash
 php artisan migrate --seed
 
 
@@ -48,7 +44,6 @@ DB_USERNAME=root
 DB_PASSWORD=your_password
 
 Jalankan server Laravel di alamat http://127.0.0.1:8000:
-```bash
 php artisan serve
 
 🖼️ Screenshots
@@ -58,7 +53,6 @@ Admin Dashboard	Halaman Pesanan
 🔐 User dan Admin Default
 Setelah proses seeding, gunakan akun default berikut untuk login:
 
-```bash
 Ussername : admin
 Password : admin
 
