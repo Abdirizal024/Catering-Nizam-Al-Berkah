@@ -19,9 +19,6 @@ Sebelum memulai, pastikan perangkat Anda telah memenuhi persyaratan berikut:
 - **MySQL** >= 5.7
 - **Node.js** >= 12.x dan **npm** >= 6.x
 - **Git** (opsional)
-  
-cd Catering-Nizam-Al-Berkah
-
 
 ## 📦 Instalasi Langkah-demi-Langkah
 
@@ -36,11 +33,6 @@ cp .env.example .env
 php artisan key:generate
 bash
 php artisan migrate --seed
-
-### 1. Clone Repository
-Clone repository ini ke dalam komputer Anda:
-
-```bash
 
 Buat database baru di MySQL, contohnya catering_db.
 Konfigurasikan database pada file .env seperti berikut:
@@ -80,5 +72,7 @@ Proyek ini menggunakan MIT License.
 
 
 💡 Tips: Pastikan selalu memperbarui dependensi dengan composer update dan npm update.
+
+cd Catering-Nizam-Al-Berkah
 
 
