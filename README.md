@@ -72,7 +72,3 @@ Proyek ini menggunakan MIT License.
 
 
 💡 Tips: Pastikan selalu memperbarui dependensi dengan composer update dan npm update.
-
-cd Catering-Nizam-Al-Berkah
-
-
