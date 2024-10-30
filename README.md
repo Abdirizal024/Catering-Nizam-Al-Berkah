@@ -74,7 +74,31 @@ Password : admin
 🤝 Kontribusi
 Kami terbuka untuk kontribusi! Silakan fork repository ini dan buat pull request.
 
+## 📱 Ikuti Kami di Media Sosial Tetap terhubung dan ikuti perkembangan proyek kami di media sosial :
 
+<div align="center">
+  
+[![Facebook](https://img.shields.io/badge/Facebook-%231877F2.svg?style=for-the-badge&logo=Facebook&logoColor=white)](https://facebook.com/YourPageName)
+[![Twitter](https://img.shields.io/badge/Twitter-%231DA1F2.svg?style=for-the-badge&logo=Twitter&logoColor=white)](https://twitter.com/YourTwitterHandle)
+[![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?style=for-the-badge&logo=Instagram&logoColor=white)](https://instagram.com/abdi.rizal.022)
+[![WhatsApp](https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/6285654800639)
+
+</div>
+
+### 🌟 Stay Connected!
+
+Follow us and join our community for:
+
+- 🎯 Get exclusive updates and news
+- 💡 Share your ideas and feedback
+- 🤝 Direct consultation via WhatsApp
+- 🎉 Be the first to know about new features
+
+---
+
+<div align="center">
+  <sub>Made with ❤️ by Abdi</sub>
+</div>
 
 📝 Lisensi
 Proyek ini menggunakan MIT License.
