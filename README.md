@@ -38,10 +38,16 @@ composer install
 cp .env.example .env
 ```
 ```
+php artisan migrate
+```
+```
 php artisan key:generate
 ```
 ```
 php artisan migrate --seed
+```
+```
+php artisan storage:link
 ```
 Buat database baru di MySQL, contohnya catering_db.
 Konfigurasikan database pada file ```.env``` seperti berikut:
