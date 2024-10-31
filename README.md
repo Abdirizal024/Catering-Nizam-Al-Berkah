@@ -1,66 +1,119 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🌟 Catering Nizam Al-Berkah 🌟
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+> Sebuah sistem aplikasi manajemen pesanan catering dengan fitur yang lengkap untuk kemudahan pelanggan dan efisiensi admin!
 
-## About Laravel
+![Laravel](https://img.shields.io/badge/Laravel-^8.0-red?style=for-the-badge&logo=laravel)
+![PHP](https://img.shields.io/badge/PHP-^7.3-blue?style=for-the-badge&logo=php)
+![MySQL](https://img.shields.io/badge/MySQL-^5.7-orange?style=for-the-badge&logo=mysql)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-^4.5-purple?style=for-the-badge&logo=bootstrap)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Fitur Utama
+- **Manajemen Pesanan**: Pengelolaan pesanan dan transaksi dengan status dan notifikasi yang lengkap.
+- **Manajemen Menu**: Tambah, edit, dan hapus menu secara mudah.
+- **Laporan dan Statistik**: Analisis penjualan dan performa melalui grafik dan laporan.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🔧 Persyaratan
+Sebelum memulai, pastikan perangkat Anda telah memenuhi persyaratan berikut:
+- **PHP** >= 8.2
+- **Composer** >= 2.0
+- **MySQL** >= 5.7
+- **Git** (opsional)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 📦 Instalasi Langkah-demi-Langkah
 
-## Learning Laravel
+### 1. Clone Repository
+Clone repository ini ke dalam komputer Anda:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```bash
+git clone https://github.com/Abdirizal024/Catering-Nizam-Al-Berkah.git
+```
+Extraks folder zip Catering-Nizam-Al-Berkah-main menjadi nama catering
+```
+cd catering
+```
+```
+composer install
+```
+```
+cp .env.example .env
+```
+```
+php artisan migrate
+```
+```
+php artisan key:generate
+```
+```
+php artisan migrate --seed
+```
+```
+php artisan storage:link
+```
+Buat database baru di MySQL, contohnya catering_db.
+Konfigurasikan database pada file ```.env``` seperti berikut:
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=catering_db
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Jalankan server Laravel di alamat http://127.0.0.1:8000:
+```
+php artisan serve
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+🖼️ Screenshots
 
-## Laravel Sponsors
+Admin Dashboard	Halaman Pesanan
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+🔐 User dan Admin Default
+Setelah proses seeding, gunakan akun default berikut untuk login:
 
-### Premium Partners
+```
+Username : admin
+Password : admin
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+🤝 Kontribusi
+Kami terbuka untuk kontribusi! Silakan fork repository ini dan buat pull request.
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+📝 Lisensi
+Proyek ini menggunakan MIT License.
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+💡 Tips: Pastikan selalu memperbarui dependensi dengan composer update dan npm update.
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## 📱 Ikuti Kami di Media Sosial Tetap terhubung dan ikuti perkembangan proyek kami di media sosial :
+
+<div align="center">
+  
+[![Facebook](https://img.shields.io/badge/Facebook-%231877F2.svg?style=for-the-badge&logo=Facebook&logoColor=white)](https://facebook.com/YourPageName)
+[![Twitter](https://img.shields.io/badge/Twitter-%231DA1F2.svg?style=for-the-badge&logo=Twitter&logoColor=white)](https://twitter.com/YourTwitterHandle)
+[![Instagram](https://img.shields.io/badge/Instagram-%23E4405F.svg?style=for-the-badge&logo=Instagram&logoColor=white)](https://instagram.com/YourInstagram)
+[![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/YourLinkedIn)
+[![WhatsApp](https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white)](https://wa.me/YourPhoneNumber)
+
+</div>
+
+### 🌟 Stay Connected!
+
+Follow us and join our community for:
+
+- 🎯 Get exclusive updates and news
+- 💡 Share your ideas and feedback
+- 🤝 Direct consultation via WhatsApp
+- 🎉 Be the first to know about new features
+
+---
+
+<div align="center">
+  <sub>Made with ❤️ by Abdi</sub>
+</div>
