@@ -58,7 +58,18 @@
                           <a href="{{ route('admin.tambah') }}" class="btn btn-primary">
                               <i class="fas fa-plus"></i> Tambah Admin
                           </a>
-                      </div>                      
+                      </div>
+                                            @if (session('success'))
+                          <div class="alert alert-success">
+                              {{ session('success') }}
+                          </div>
+                      @endif
+                      @if (session('error'))
+                          <div class="alert alert-danger">
+                              {{ session('error') }}
+                          </div>
+                      @endif
+
                             <div class="table-responsive">
                                 <table id="admin-table" class="table table-bordered table-hover">
                                     <thead>
@@ -79,7 +90,12 @@
                                             <td>{{ $admin->username }}</td>
                                             <td>{{ $admin->email }}</td>
                                             <td>
-                                                <img src="{{ asset('images/' . ($admin->profile_picture ?? 'default_profile.jpg')) }}" alt="Profile Picture" class="img-thumbnail" style="width: 50px;">
+                                              <img 
+                                              src="{{ asset($admin->profile_picture ? $admin->profile_picture : 'images/default-admin2.png') }}" 
+                                              alt="Profile Picture" 
+                                              class="img-thumbnail" 
+                                              style="width: 50px;"
+                                          >
                                             </td>
                                             <td>
                                                 <a href="{{ route('admin.edit', $admin->id) }}" class="btn btn-sm btn-warning">Edit</a>

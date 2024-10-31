@@ -54,9 +54,9 @@
 </div>
   <div class="card-body">
 
-        <!-- Tabel Menu -->
+        <!-- Tabel Transaksi -->
         @if($orders->isEmpty())
-            <p class="text-center">Tidak ada menu tersedia.</p>
+            <p class="text-center">Tidak ada transaksi tersedia.</p>
         @else
         <div class="table-responsive">
           <table id="transaksi-table" class="table table-bordered table-hover">
@@ -83,14 +83,14 @@
                       <td>Rp {{ number_format($order->total_price, 0, ',', '.') }}</td>
                       <td>
                           @if ($order->status == 'paid')
-                          <span class="badge badge-success">Paid</span>
+                          <span class="badge badge-success">Sudah Bayar</span>
                           @elseif ($order->status == 'expired')
                           <span class="badge badge-danger">Expired</span>
                           @else
                           <span class="badge badge-warning">{{ ucfirst($order->status) }}</span>
                           @endif
                       </td>
-                      <td>{{ $order->created_at->format('d M Y, H:i') }}</td>
+                      <td>{{ date('d M Y, H:i', strtotime($order->created_at)) }}</td>
                   </tr>
                   @endforeach
               </tbody>

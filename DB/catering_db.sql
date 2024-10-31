@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 30 Okt 2024 pada 03.00
+-- Waktu pembuatan: 31 Okt 2024 pada 17.56
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -34,6 +34,7 @@ CREATE TABLE `admin` (
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `profile_picture` varchar(255) DEFAULT NULL,
+  `last_login_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -42,9 +43,8 @@ CREATE TABLE `admin` (
 -- Dumping data untuk tabel `admin`
 --
 
-INSERT INTO `admin` (`id`, `name`, `email`, `username`, `password`, `profile_picture`, `created_at`, `updated_at`) VALUES
-(1, 'Administrator', 'admin@gmail.com', 'admin', '$2y$12$93R2Shyqk4sE4c305d2ITePtTqtMXdTjRtaDxRabg.T/2eRMY2Tsm', 'default-admin2.png', '2024-10-29 16:51:06', '2024-10-29 16:51:06'),
-(2, 'Edong', 'edong@gmail.com', 'edoo', '$2y$12$3TWJDqgsoJJV34JhDTheqeMGtlZ9WVNeFMj9Qm2RMpymMXLDM.4GK', 'default-admin2.png', '2024-10-29 17:19:59', '2024-10-29 17:19:59');
+INSERT INTO `admin` (`id`, `name`, `email`, `username`, `password`, `profile_picture`, `last_login_at`, `created_at`, `updated_at`) VALUES
+(1, 'Administrator', 'admin@gmail.com', 'admin', '$2y$12$dlcmgoPtPVwJXPxCm5Y.nOdnHWI0qGzM4rpKCRbsSOMSnSiFaKb3q', 'images/default-admin2.png', '2024-10-31 16:41:57', '2024-10-31 13:18:52', '2024-10-31 16:41:57');
 
 -- --------------------------------------------------------
 
@@ -156,7 +156,8 @@ CREATE TABLE `menu` (
 
 INSERT INTO `menu` (`id`, `nama`, `deskripsi`, `harga`, `gambar`, `created_at`, `updated_at`) VALUES
 (1, 'Nasi Kotak', 'Nyaman Bnar nasi nya', 150000.00, 'images/X8omlAol9qtyHO964TnZBa4Hw7DITsd8jyp8IgVW.jpg', '2024-10-29 17:07:26', '2024-10-29 17:07:26'),
-(2, 'Nasi Samin', 'Sudah pasti nyaman petcah', 200000.00, 'images/CIW5Hhb8t9P2Xbkb5TqpvKraiK53DUvuUNya3Xzc.jpg', '2024-10-29 17:10:13', '2024-10-29 17:10:13');
+(2, 'Nasi Samin', 'Sudah pasti nyaman petcah', 200000.00, 'images/CIW5Hhb8t9P2Xbkb5TqpvKraiK53DUvuUNya3Xzc.jpg', '2024-10-29 17:10:13', '2024-10-29 17:10:13'),
+(3, 'Nasi Tumpeng', 'nyamann lalu', 100.00, 'images/4oU0XgTD9LlbkqshNabb4Z4t7XElDHiuG0nGVkg9.jpg', '2024-10-30 16:58:32', '2024-10-30 16:58:32');
 
 -- --------------------------------------------------------
 
@@ -192,7 +193,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (22, '2024_10_10_004101_create_menu_table', 14),
 (23, '2024_10_12_170927_create_kontak_table', 14),
 (24, '2024_10_30_004340_create_admin_table', 15),
-(25, '2024_10_30_005650_create_testimoni_table', 16);
+(25, '2024_10_30_005650_create_testimoni_table', 16),
+(26, '2024_10_31_211241_create_admin_table', 17),
+(27, '2024_10_31_211718_create_admin_table', 18);
 
 -- --------------------------------------------------------
 
@@ -218,13 +221,7 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `menu_id`, `customer_name`, `customer_phone`, `customer_address`, `status`, `quantity`, `total_price`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Aulia', '085654800676', 'Kayu Tangi', 'pending', 1, 150000.00, '2024-10-16 18:33:16', '2024-10-16 18:33:16'),
-(2, 1, 'abdi', '085654800676', 'Alalak tengah', 'pending', 1, 150000.00, '2024-10-16 18:39:19', '2024-10-16 18:39:19'),
-(3, 2, 'nawfal', '085654800676', 'Sungai Andai', 'pending', 2, 400000.00, '2024-10-16 18:50:54', '2024-10-16 18:50:54'),
-(4, 1, 'edong', '085654800676', 'Alalak tengah', 'pending', 1, 150000.00, '2024-10-16 22:34:21', '2024-10-16 22:34:21'),
-(5, 2, 'abdi', '085654800676', 'Kayu Tangi', 'pending', 2, 400000.00, '2024-10-17 17:30:35', '2024-10-17 17:30:35'),
-(6, 2, 'panji', '085654545333', 'sumgai andai', 'pending', 2, 400000.00, '2024-10-17 18:49:45', '2024-10-17 18:49:45'),
-(7, 2, 'thdte', '34567890-=', '23456789', 'pending', 7, 1400000.00, '2024-10-28 21:25:59', '2024-10-28 21:25:59');
+(1, 2, 'nawfal', '085654800987', 'Cempaka', 'paid', 4, 800000.00, '2024-10-31 16:52:51', '2024-10-31 16:53:46');
 
 -- --------------------------------------------------------
 
@@ -412,7 +409,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `failed_jobs`
@@ -436,19 +433,19 @@ ALTER TABLE `kontak`
 -- AUTO_INCREMENT untuk tabel `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT untuk tabel `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `testimoni`

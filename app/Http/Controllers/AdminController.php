@@ -9,6 +9,7 @@ use App\Models\Kontaks;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon; // Pastikan ini ada
 use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
@@ -18,24 +19,24 @@ class AdminController extends Controller
         $menuCount = Menu::count();
         $orderCount = Order::count();
         $adminCount = Admin::count();
-        $admin = Auth::guard('admin')->user(); // Mendapatkan admin yang sedang login
+  $currentAdmin = Auth::guard('admin')->user(); // Mendapatkan admin yang sedang login
 
-        return view('admin.index', compact('menuCount', 'orderCount', 'adminCount', 'admin'));
+        return view('admin.index', compact('menuCount', 'orderCount', 'adminCount', 'currentAdmin'));
     }
 
 
     public function menu()
     {
         $menus = Menu::all();
-        $admin = Auth::guard('admin')->user(); // Mendapatkan admin yang sedang login
-        return view('admin.menu', compact('menus', 'admin'));
+ $currentAdmin = Auth::guard('admin')->user(); // Mendapatkan admin yang sedang login
+        return view('admin.menu', compact('menus', 'currentAdmin'));
     }
 
  // Menampilkan halaman profil
  public function profile()
  {
-     $admin = Auth::guard('admin')->user();
-     return view('admin.profile', compact('admin'));
+      $currentAdmin = Auth::guard('admin')->user(); // Mendapatkan admin yang sedang login
+     return view('admin.profile', compact('currentAdmin'));
  }
 
  // Update profil admin // Update admin profile information
@@ -91,36 +92,49 @@ $user->save();
         return redirect()->back()->with('success', 'Password updated successfully');
     }
 
-    public function data_admin()
-    {
-        $admins = Admin::all(); // Ambil semua data admin
-        $admin = Auth::guard('admin')->user(); // Mendapatkan admin yang sedang login
+public function data_admin()
+{
+    $admins = Admin::all(); // Ambil semua data admin
+    $currentAdmin = Auth::guard('admin')->user(); // Mendapatkan admin yang sedang login
 
-        return view('admin.admin', compact('admin','admins'));
-    }
+    return view('admin.admin', compact('currentAdmin', 'admins'));
+}
+
+    
+
 
       // Tampilkan form untuk menambahkan admin baru
       public function adminCreate()
       {
-        $admin = Auth::guard('admin')->user(); // Mendapatkan admin yang sedang login
+        $currentAdmin = Auth::guard('admin')->user(); // Mendapatkan admin yang sedang login
 
-          return view('admin.tambah_admin', compact('admin'));
+          return view('admin.tambah_admin', compact('currentAdmin'));
       }
 
       public function adminStore(Request $request)
 {
+    // Validasi input
     $request->validate([
         'name' => 'required|string|max:255',
         'username' => 'required|string|max:255|unique:admin',
         'email' => 'required|string|email|max:255|unique:admin',
         'password' => 'required|string|min:8',
-        'profile_picture' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+        'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
 
+    // Cek jika ada admin yang sedang login
+    $currentAdmin = Auth::user();
+
+
+    // Mengatur gambar profil default
+    $profilePicture = 'images/default-admin2.png';
+
     // Upload gambar profil jika ada
-    $profilePicture = 'default-admin2.png';
     if ($request->hasFile('profile_picture')) {
-        $profilePicture = $request->file('profile_picture')->store('profile_pictures', 'public');
+        $fileName = time() . '_' . $request->file('profile_picture')->getClientOriginalName();
+        $filePath = 'images/' . $fileName;
+        $request->file('profile_picture')->move(public_path('images'), $fileName);
+        $profilePicture = $filePath;
     }
 
     // Membuat admin baru
@@ -132,8 +146,9 @@ $user->save();
         'profile_picture' => $profilePicture,
     ]);
 
-    return redirect()->route('admin')->with('success', 'Akun admin berhasil dibuat. Silakan login.');
+    return redirect()->route('data.admin')->with('success', 'Akun admin berhasil dibuat. Silakan login.');
 }
+
 
       
 
@@ -199,9 +214,9 @@ $user->save();
 
     public function create()
     {
-        $admin = Auth::guard('admin')->user(); // Mendapatkan admin yang sedang login
+        $currentAdmin = Auth::guard('admin')->user(); // Mendapatkan admin yang sedang login
 
-        return view('admin.tambah_menu', compact('admin'));
+        return view('admin.tambah_menu', compact('currentAdmin'));
     }
 
         // Method untuk menyimpan menu baru ke database
@@ -230,13 +245,13 @@ $user->save();
 
     public function edit($id)
     {
-        $admin = Auth::guard('admin')->user(); // Mendapatkan admin yang sedang login
+        $currentAdmin = Auth::guard('admin')->user(); // Mendapatkan admin yang sedang login
 
         // Ambil data menu berdasarkan ID
         $menu = Menu::findOrFail($id);
 
         // Tampilkan halaman edit menu
-        return view('admin.edit_menu', compact('menu', 'admin'));
+        return view('admin.edit_menu', compact('menu', 'currentAdmin'));
     }
 
     public function update(Request $request, $id)
@@ -272,39 +287,40 @@ $user->save();
     }
 
     public function transaksi()
-    {
-        $admin = Auth::guard('admin')->user(); // Mendapatkan admin yang sedang login
+{
+    $currentAdmin = Auth::guard('admin')->user(); // Mendapatkan admin yang sedang login
 
-        // Ambil semua data pesanan
-        $orders = Order::with('menu')->get();
+    $orders = Order::all(); // Ambil semua data order
 
-        // Kirim data ke view
-        return view('admin.transaksi', compact('orders', 'admin'));
-    }
+    // Kirim data ke view
+    return view('admin.transaksi', compact('orders', 'currentAdmin'));
+}
 
-    public function kontak()
-    {
-        $kontak = Kontaks::where('id', 1)->first();
-        return view('admin.kontak', [
-            'title' => 'Kontak',
-            'kontak' => $kontak
-        ]);
-    }
 
-    public function update_kontak(Request $request, $id)
-    {
+    // public function kontak()
+    // {
+    //     $currentAdmin = Auth::guard('admin')->user(); // Mendapatkan admin yang sedang login
+    //     $kontak = Kontaks::where('id', 1)->first();
+    //     return view('admin.kontak', [
+    //         'title' => 'Kontak',
+    //         'kontak' => $kontak
+    //     ]);
+    // }
 
-        $request->validate([
-            'kontak' => 'required|numeric'
-        ]);
+    // public function update_kontak(Request $request, $id)
+    // {
 
-        // Temukan kontak berdasarkan ID dan perbarui
-        $kontak = Kontaks::findOrFail($id);
-        $kontak->kontak = $request->input('kontak');
-        $kontak->save();
+    //     $request->validate([
+    //         'kontak' => 'required|numeric'
+    //     ]);
 
-        return redirect()->back()->with('success', 'Kontak berhasil diperbarui');
-    }
+    //     // Temukan kontak berdasarkan ID dan perbarui
+    //     $kontak = Kontaks::findOrFail($id);
+    //     $kontak->kontak = $request->input('kontak');
+    //     $kontak->save();
+
+    //     return redirect()->back()->with('success', 'Kontak berhasil diperbarui');
+    // }
 
     public function login()
     {
@@ -313,24 +329,37 @@ $user->save();
 
 
     public function login_proses(Request $request)
-{
-    // Validasi input
-    $credentials = $request->validate([
-        'username' => 'required|string',
-        'password' => 'required|string',
-    ]);
-
-    // Proses login dengan guard admin
-    if (Auth::guard('admin')->attempt(['username' => $credentials['username'], 'password' => $credentials['password']])) {
-        $request->session()->regenerate();
-        return redirect()->intended(route('admin'))->with('success', 'Berhasil login!');
+    {
+        // Validasi input
+        $credentials = $request->validate([
+            'username' => 'required|string',
+            'password' => 'required|string',
+        ]);
+    
+        // Proses login dengan guard admin
+        if (Auth::guard('admin')->attempt(['username' => $credentials['username'], 'password' => $credentials['password']])) {
+            $request->session()->regenerate();
+    
+            // Ambil pengguna yang sedang login
+            $admin = Auth::guard('admin')->user();
+    
+            // Pastikan $admin adalah model Admin
+            if ($admin instanceof Admin) { // Gunakan Admin tanpa namespace lengkap
+                $admin->last_login_at = now(); // Simpan waktu login
+                $admin->save(); // Simpan ke database
+            } else {
+                // Tindakan alternatif jika $admin bukan model yang diharapkan
+                return back()->withErrors(['loginError' => 'Terjadi kesalahan saat menyimpan data login.']);
+            }
+    
+            return redirect()->intended(route('admin'))->with('success', 'Berhasil login!');
+        }
+    
+        // Jika gagal login
+        return back()->withErrors([
+            'loginError' => 'Username atau password salah!',
+        ]);
     }
-
-    // Jika gagal login
-    return back()->withErrors([
-        'loginError' => 'Username atau password salah!',
-    ]);
-}
 
 
     public function logout()

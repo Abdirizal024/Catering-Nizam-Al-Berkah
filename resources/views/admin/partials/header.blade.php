@@ -45,18 +45,21 @@
 <!-- Tampilkan Username dan Profile Picture Admin -->
 <li class="nav-item dropdown user-menu">
     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-       <img src="{{ asset('images/' . ($admin->profile_picture ?? 'default-profile.png')) }}"
+       <img src="{{ asset($currentAdmin->profile_picture ? $currentAdmin->profile_picture : 'images/default-admin2.png') }}"
      class="user-image rounded-circle" alt="User Image"/>
-        <span class="d-none d-md-inline">{{ $admin->name }}</span>
+        <span class="d-none d-md-inline">{{ $currentAdmin->name }}</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
         <!-- User image -->
         <li class="user-header text-bg-primary">
-           <img src="{{ asset('images/' . ($admin->profile_picture ?? 'default-profile.png')) }}"
+           <img src="{{ asset($currentAdmin->profile_picture ? $currentAdmin->profile_picture : 'images/default-admin2.png') }}"
      class="user-image rounded-circle shadow" alt="User Image"/>
             <p>
-                {{ $admin->username }} - Administrasi
-                <small>Member since {{ $admin->created_at->format('d M Y, H:i') }}</small>
+                {{ $currentAdmin->username }} - Administrasi
+                <small>
+                  Member since 
+                  {{ \Carbon\Carbon::parse($currentAdmin->last_login_at)->format('d M Y, H:i') }}
+              </small>              
             </p>
         </li>
         <!-- Menu Footer-->
@@ -65,7 +68,7 @@
 <a href="{{ route('profile') }}" class="btn btn-outline-secondary btn-flat border">
   <i class="fas fa-user"></i> Profil
 </a>
-<a href="{{ route('logout') }}" class="btn btn-outline-secondary btn-flat border float-end" 
+<a href="{{ route('logout') }}" class="btn btn-outline-secondary btn-flat border float-end"
  onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
   <i class="fa fa-fw fa-power-off"></i> Keluar
 </a>

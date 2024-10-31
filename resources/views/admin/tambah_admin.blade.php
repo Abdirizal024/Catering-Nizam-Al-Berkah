@@ -11,12 +11,12 @@
 
 @section('content-header')
 
-<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;"> 
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
     <div class="col-md-6"> <!--begin::Quick Example-->
         <div class="card card-primary card-outline mb-4"> <!--begin::Header-->
             <div class="card-header">
                 <div class="card-title">Form Tambah Admin</div>
-            </div> <!--end::Header--> 
+            </div> <!--end::Header-->
 
             <!--begin::Form-->
             <form action="{{ route('admin.store') }}" method="POST" enctype="multipart/form-data">
@@ -62,8 +62,8 @@
                 <!-- End::Footer -->
             </form>
             <!--end::Form-->
-        </div> <!--end::Quick Example--> 
-    </div> <!--end::Col--> 
+        </div> <!--end::Quick Example-->
+    </div> <!--end::Col-->
 </div> <!--end::d-flex-->
 @endsection
 

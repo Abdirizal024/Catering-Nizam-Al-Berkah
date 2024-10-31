@@ -12,7 +12,7 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        'api/midtrans/callback', // Tambahkan URL rute API yang tidak perlu CSRF
+        '/midtrans/callback', // Tambahkan URL rute API yang tidak perlu CSRF
     ];
 
 

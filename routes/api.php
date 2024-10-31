@@ -8,4 +8,3 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 
 
 
-Route::post('/midtrans/callback', [PaymentController::class, 'callback']);

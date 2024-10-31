@@ -19,7 +19,7 @@ class AdminSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'username' => 'admin',
             'password' => Hash::make('admin'),
-            'profile_picture' => 'default-admin2.png' // Path gambar default
+            'profile_picture' => 'images/default-admin2.png' // Path gambar default
         ]);
     }
 }

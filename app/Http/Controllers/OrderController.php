@@ -8,6 +8,7 @@ use Midtrans\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
+
 class OrderController extends Controller
 {
     public function confirm($id)
@@ -80,6 +81,57 @@ public function details($id)
 
     // Kirim token dan order ke view
     return view('details', compact('order', 'snapToken'));
+}
+
+
+
+public function handleCallback(Request $request)
+{
+    // Konfigurasi Midtrans
+    \Midtrans\Config::$serverKey = config('midtrans.server_key');
+
+            // Proses callback
+        Log::info('Midtrans callback received: ', $request->all());
+    
+    // Ambil data dari callback Midtrans
+    $orderId = $request->input('order_id');
+    $statusCode = $request->input('status_code');
+    $grossAmount = $request->input('gross_amount');
+    $signatureKey = $request->input('signature_key');
+
+    // Buat signature yang valid dari data yang diterima menggunakan SHA512
+    $serverSignatureKey = hash('sha512', $orderId . $statusCode . $grossAmount . \Midtrans\Config::$serverKey);
+
+    // Verifikasi signature
+    if ($signatureKey !== $serverSignatureKey) {
+        Log::warning('Invalid signature for order ID: ' . $orderId);
+        return response()->json(['status' => 'error', 'message' => 'Invalid signature'], 403);
+    }
+
+    // Lakukan update status pesanan sesuai status dari Midtrans
+    $order = Order::where('order_id', $orderId)->first();
+    if (!$order) {
+        return response()->json(['status' => 'error', 'message' => 'Order not found'], 404);
+    }
+
+    switch ($statusCode) {
+        case '200': // Payment Success
+            $order->status = 'Paid';
+            break;
+        case '202': // Payment Denied
+            $order->status = 'Denied';
+            break;
+        case '407': // Payment Pending
+            $order->status = 'Pending';
+            break;
+        default:
+            $order->status = 'Unknown';
+            break;
+    }
+
+    $order->save();
+
+    return response()->json(['status' => 'success', 'message' => 'Callback processed']);
 }
 
 
