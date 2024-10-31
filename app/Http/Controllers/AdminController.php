@@ -108,34 +108,33 @@ $user->save();
       }
 
       public function adminStore(Request $request)
-      {
-          // Validasi input
-          $validatedData = $request->validate([
-              'name' => 'required|string|max:255',
-              'email' => 'required|email|unique:admin',
-              'username' => 'required|string|unique:admin|max:255',
-              'password' => 'required|string|min:8',
-              'profile_picture' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
-          ]);
-      
-          // Hash password
-          $validatedData['password'] = Hash::make($validatedData['password']);
-      
-          // Cek apakah ada gambar yang diupload
-          if ($request->hasFile('profile_picture')) {
-              $gambarPath = $request->file('profile_picture')->store('images', 'public');
-              $validatedData['profile_picture'] = $gambarPath;
-          } else {
-              // Set gambar default jika tidak ada gambar yang diupload
-              $validatedData['profile_picture'] = 'default-admin2.png';
-          }
-      
-          // Simpan data admin ke database
-          Admin::create($validatedData);
-      
-          // Redirect ke halaman daftar admin dengan pesan sukses
-          return redirect()->route('admin.index')->with('success', 'Admin berhasil ditambahkan!');
-      }
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'username' => 'required|string|max:255|unique:admin',
+        'email' => 'required|string|email|max:255|unique:admin',
+        'password' => 'required|string|min:8',
+        'profile_picture' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+    ]);
+
+    // Upload gambar profil jika ada
+    $profilePicture = 'default-admin2.png';
+    if ($request->hasFile('profile_picture')) {
+        $profilePicture = $request->file('profile_picture')->store('profile_pictures', 'public');
+    }
+
+    // Membuat admin baru
+    Admin::create([
+        'name' => $request->name,
+        'username' => $request->username,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'profile_picture' => $profilePicture,
+    ]);
+
+    return redirect()->route('admin')->with('success', 'Akun admin berhasil dibuat. Silakan login.');
+}
+
       
 
       // Tampilkan form edit admin
