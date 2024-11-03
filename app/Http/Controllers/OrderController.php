@@ -87,51 +87,42 @@ public function details($id)
 
 public function handleCallback(Request $request)
 {
-    // Konfigurasi Midtrans
-    \Midtrans\Config::$serverKey = config('midtrans.server_key');
+ // Ambil data dari notifikasi Midtrans
+ Log::info('Menerima notifikasi dari Midtrans', $request->all());
 
-            // Proses callback
-        Log::info('Midtrans callback received: ', $request->all());
-    
-    // Ambil data dari callback Midtrans
-    $orderId = $request->input('order_id');
-    $statusCode = $request->input('status_code');
-    $grossAmount = $request->input('gross_amount');
-    $signatureKey = $request->input('signature_key');
+ // Proses notifikasi
+ $notification = $request->all();
+ $orderId = $notification['order_id'];
+ $status = $notification['transaction_status'];
+ $fraud = $notification['fraud_status'];
 
-    // Buat signature yang valid dari data yang diterima menggunakan SHA512
-    $serverSignatureKey = hash('sha512', $orderId . $statusCode . $grossAmount . \Midtrans\Config::$serverKey);
+ // Cari order berdasarkan ID
+ $order = Order::where('id', explode('-', $orderId)[0])->first();
 
-    // Verifikasi signature
-    if ($signatureKey !== $serverSignatureKey) {
-        Log::warning('Invalid signature for order ID: ' . $orderId);
-        return response()->json(['status' => 'error', 'message' => 'Invalid signature'], 403);
-    }
+ if ($status == 'capture') {
+     // Jika pembayaran berhasil
+     if ($fraud == 'accept') {
+         $order->status = 'Sudah Dibayar';
+         Log::info('Pembayaran berhasil', ['order_id' => $orderId]);
+     } else {
+         $order->status = 'failed';
+         Log::warning('Pembayaran ditolak oleh sistem', ['order_id' => $orderId]);
+     }
+ } elseif ($status == 'settlement') {
+     $order->status = 'Sudah Dibayar';
+     Log::info('Pembayaran diselesaikan', ['order_id' => $orderId]);
+ } elseif ($status == 'pending') {
+     $order->status = 'pending';
+     Log::info('Pembayaran masih pending', ['order_id' => $orderId]);
+ } elseif ($status == 'deny') {
+     $order->status = 'failed';
+     Log::warning('Pembayaran ditolak', ['order_id' => $orderId]);
+ }
 
-    // Lakukan update status pesanan sesuai status dari Midtrans
-    $order = Order::where('order_id', $orderId)->first();
-    if (!$order) {
-        return response()->json(['status' => 'error', 'message' => 'Order not found'], 404);
-    }
+ // Simpan status order
+ $order->save();
 
-    switch ($statusCode) {
-        case '200': // Payment Success
-            $order->status = 'Paid';
-            break;
-        case '202': // Payment Denied
-            $order->status = 'Denied';
-            break;
-        case '407': // Payment Pending
-            $order->status = 'Pending';
-            break;
-        default:
-            $order->status = 'Unknown';
-            break;
-    }
-
-    $order->save();
-
-    return response()->json(['status' => 'success', 'message' => 'Callback processed']);
+ return response()->json(['status' => 'success']);
 }
 
 

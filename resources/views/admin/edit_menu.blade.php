@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 
-@section('title', 'Beranda Admin | Catering Nizam')
+@section('title', 'From Edit Menu | Catering Nizam')
 
 @push('styles')
     <!-- DataTables Bootstrap 4 CSS -->

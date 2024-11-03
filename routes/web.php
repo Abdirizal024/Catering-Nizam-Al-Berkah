@@ -20,6 +20,7 @@ Route::get('/blog', [DashboardController::class, 'blog'])->name('blog');
 Route::get('/menu', [DashboardController::class, 'menu'])->name('menu');
 Route::get('/admin/register', [AdminController::class, 'register'])->name('register');
 Route::post('/admin/register', [AdminController::class, 'register_proses'])->name('admin.register');
+
 Route::get('/admin/login', [AdminController::class, 'login'])->name('login');
 Route::post('/admin/login', [AdminController::class, 'login_proses'])->name('admin.login');
 Route::middleware(['auth:admin'])->group(function () {
@@ -55,4 +56,4 @@ Route::get('/order-success', [OrderController::class, 'orderSuccess'])->name('or
 Route::get('/order-success', [OrderController::class, 'orderSuccess'])->name('order.success');
 Route::get('/order/continue/{id}', [PaymentController::class, 'continueTransaction'])->name('order.continue');
 
-Route::post('/midtrans/callback', [PaymentController::class, 'callback']);
+Route::post('/midtrans/callback', [OrderController::class, 'handleCallback']);

@@ -87,8 +87,6 @@
 
 <script type="text/javascript">
     document.getElementById('pay-button').onclick = function () {
-            // CSRF Token
-        var csrfToken = '{{ csrf_token() }}';
         // Snap token dari server-side, ambil dari controller
         snap.pay('{{ $snapToken }}', {
  // Fungsi ini akan dipanggil setelah pembayaran selesai

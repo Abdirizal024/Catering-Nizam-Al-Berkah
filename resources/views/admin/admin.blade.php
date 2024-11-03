@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 
-@section('title', 'Beranda Admin | Catering Nizam')
+@section('title', 'Halaman Daftar Admin | Catering Nizam')
 
 @push('styles')
 <!-- Font Awesome -->

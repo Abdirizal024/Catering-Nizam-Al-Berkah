@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 
-@section('title', 'Edit Admin | Catering Nizam')
+@section('title', 'From Edit Admin | Catering Nizam')
 
 @push('styles')
     <!-- DataTables Bootstrap 4 CSS -->
@@ -59,6 +59,18 @@
                         <input type="file" name="profile_picture" class="form-control" id="profile_picture">
                         <label class="input-group-text" for="profile_picture">Upload Gambar Profil (Opsional)</label>
                     </div>
+                    
+                     <!-- Menampilkan Gambar Profil Saat Ini atau Gambar Default -->
+        <div class="mb-3">
+          <label class="form-label">Gambar Profil Saat Ini :</label>
+          <div>
+              <img 
+                  src="{{ $admin->profile_picture ? asset('storage/' . $admin->profile_picture) : asset('images/default-profile.png') }}" 
+                  alt="Gambar Profil Admin" 
+                  style="width: 150px; height: 150px; object-fit: cover; border-radius: 50%;"
+              >
+          </div>
+          <small class="form-text text-muted">Jika tidak diunggah, gambar default akan digunakan.</small>
                 </div>
                 <!-- End::Body -->
 

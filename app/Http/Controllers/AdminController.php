@@ -69,28 +69,33 @@ $user->save();
     }
 
     // Update admin password
-    public function updatePassword(Request $request)
-    {
-        $request->validate([
-            'slama' => 'required',
-            'sbaru' => 'required|min:8|confirmed'
-        ]);
+public function updatePassword(Request $request)
+{
+    $request->validate([
+        'slama' => 'required',
+        'sbaru' => 'required|confirmed'
+    ]);
 
-        $user = Auth::user();
+    // Mendapatkan pengguna yang sedang login
+    $user = Auth::user();
 
-        if (!Hash::check($request->slama, $user->password)) {
-            return redirect()->back()->withErrors(['slama' => 'The old password is incorrect']);
-        }
-
-        $user->password = Hash::make($request->sbaru);
-        // Explicitly declare the type of $user
-/** @var \App\Models\User $user */
-$user = Auth::user();
-$user->name = $request->name;
-$user->save();
-
-        return redirect()->back()->with('success', 'Password updated successfully');
+    // Periksa apakah $user adalah instance dari model User
+    if (!($user instanceof Admin)) {
+        return redirect()->back()->withErrors(['updateError' => 'Gagal memperbarui kata sandi.']);
     }
+
+    // Periksa kata sandi lama
+    if (!Hash::check($request->slama, $user->password)) {
+        return redirect()->back()->withErrors(['slama' => 'Kata sandi lama tidak sesuai']);
+    }
+
+    // Hash dan simpan kata sandi baru
+    $user->password = Hash::make($request->sbaru);
+    $user->save();
+
+    return redirect()->back()->with('success', 'Kata sandi berhasil diperbarui');
+}
+
 
 public function data_admin()
 {
@@ -155,30 +160,30 @@ public function data_admin()
       // Tampilkan form edit admin
       public function adminEdit($id)
       {
-        $admin = Auth::guard('admin')->user(); // Mendapatkan admin yang sedang login
+        $currentAdmin = Auth::guard('admin')->user(); // Mendapatkan admin yang sedang login
           $admin = Admin::findOrFail($id);
-          return view('admin.edit_admin', compact('admin'));
+          return view('admin.edit_admin', compact('admin', 'currentAdmin'));
       }
 
       // Perbarui data admin
       public function adminUpdate(Request $request, $id)
       {
           $admin = Admin::findOrFail($id);
-
+      
           // Validasi input
           $validatedData = $request->validate([
               'name' => 'required|string|max:255',
-              'email' => 'required|email|unique:admin,email,' . $admin->id,
+              'email' => 'required|email|unique:admin,email,' . $admin->id, // Update unique validation untuk tabel 'admins'
               'username' => 'required|string|unique:admin,username,' . $admin->id . '|max:50',
-              'password' => 'nullable|string|min:6|confirmed',
+              'password' => 'nullable|string|min:8|confirmed',
               'profile_picture' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
           ]);
-
+      
           // Hash password jika ada perubahan password
           if ($request->filled('password')) {
               $validatedData['password'] = Hash::make($request->password);
           }
-
+      
           // Jika ada file gambar baru diupload, hapus gambar lama dan simpan yang baru
           if ($request->hasFile('profile_picture')) {
               if ($admin->profile_picture) {
@@ -187,13 +192,14 @@ public function data_admin()
               $profilePicturePath = $request->file('profile_picture')->store('images', 'public');
               $validatedData['profile_picture'] = $profilePicturePath;
           }
-
+      
           // Update data admin
           $admin->update($validatedData);
-
+      
           // Redirect ke halaman daftar admin dengan pesan sukses
-          return redirect()->route('admin.index')->with('success', 'Admin berhasil diperbarui!');
+          return redirect()->route('data.admin')->with('success', 'Admin berhasil diperbarui!');
       }
+      
 
       // Hapus data admin
       public function destroy($id)
@@ -324,6 +330,11 @@ public function data_admin()
 
     public function login()
     {
+        // Periksa apakah admin sudah login
+    if (Auth::guard('admin')->check()) {
+        return redirect()->route('admin')->with('info', 'Anda sudah login, redirecting to dashboard.');
+    }
+    
         return view('admin.auth.login');
     }
 

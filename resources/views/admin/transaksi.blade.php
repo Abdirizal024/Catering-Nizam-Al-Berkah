@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 
-@section('title', 'Beranda Admin | Catering Nizam')
+@section('title', 'Transaksi Admin | Catering Nizam Al-Berkah')
 
 @push('styles')
 <!-- Font Awesome -->
@@ -82,8 +82,8 @@
                       <td>{{ $order->quantity }}</td>
                       <td>Rp {{ number_format($order->total_price, 0, ',', '.') }}</td>
                       <td>
-                          @if ($order->status == 'paid')
-                          <span class="badge badge-success">Sudah Bayar</span>
+                          @if ($order->status == 'Sudah Dibayar')
+                          <span class="badge badge-success">Sudah Dibayar</span>
                           @elseif ($order->status == 'expired')
                           <span class="badge badge-danger">Expired</span>
                           @else

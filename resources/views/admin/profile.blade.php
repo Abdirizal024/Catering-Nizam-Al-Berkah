@@ -1,6 +1,6 @@
 @extends('admin.layouts.main')
 
-@section('title', 'Beranda Admin | Catering Nizam')
+@section('title', 'Profile Admin | Catering Nizam Al-Berkah')
 
 @push('styles')
    <style>
@@ -84,13 +84,13 @@
 @section('content-header')
     <div class="row">
         <div class="col-sm-6">
-            <h3 class="mb-0">Beranda</h3>
+            <h3 class="mb-0">Profile</h3>
         </div>
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-end">
                 <li class="breadcrumb-item"><a href="#">Beranda</a></li>
                 <li class="breadcrumb-item active" aria-current="page">
-                    Beranda
+                    Profile
                 </li>
             </ol>
         </div>
@@ -108,19 +108,19 @@
                       <!-- Gambar Profil -->
                       <div class="text-center">
                           <img class="profile-user-img img-fluid img-circle profile-img-small shadow-sm"
-                               src="{{ asset('images/' . ($admin->profile_picture ?? 'default_profile.jpg')) }}"
+                               src="{{ asset($currentAdmin->profile_picture ? $currentAdmin->profile_picture : 'images/default-admin2.png') }}"
                                alt="User profile picture">
                       </div>
 
                       <!-- Informasi Admin -->
-                      <h3 class="profile-username text-center">{{ $admin->name ?? 'Admin' }}</h3>
+                      <h3 class="profile-username text-center">{{ Auth::guard('admin')->user()->name ?? 'Admin' }}</h3>
 
                       <ul class="list-group list-group-unbordered mb-3">
                           <li class="list-group-item border-bottom">
-                              <b>Username</b> <a class="float-right">{{ $admin->username ?? 'Admin' }}</a>
+                              <b>Username</b> <a class="float-right">{{ Auth::guard('admin')->user()->username ?? 'Admin' }}</a>
                           </li>
                           <li class="list-group-item border-bottom">
-                              <b>Email</b> <a class="float-right">{{ $admin->email ?? 'admin123@gmail.com' }}</a>
+                              <b>Email</b> <a class="float-right">{{ Auth::guard('admin')->user()->email ?? 'admin123@gmail.com' }}</a>
                           </li>
                       </ul>
                   </div>
@@ -172,7 +172,7 @@
                                           <input type="file" class="form-control-file" name="profile_picture">
                                           @if(auth()->user()->profile_picture)
                                               <br>
-                                              <img src="{{ asset('images/' . auth()->user()->profile_picture) }}" alt="Profile Picture" class="img-thumbnail mt-2" style="width: 100px;">
+                                              <img src="{{ asset($currentAdmin->profile_picture ? $currentAdmin->profile_picture : 'images/default-admin2.png') }}" alt="Profile Picture" class="img-thumbnail mt-2" style="width: 100px;">
                                           @endif
                                       </div>
                                   </div>
