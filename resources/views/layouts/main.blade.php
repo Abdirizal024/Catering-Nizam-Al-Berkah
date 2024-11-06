@@ -9,6 +9,8 @@
     <!-- CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <link rel="stylesheet" href="{{ asset('css/animate.css') }}">
     <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/owl.theme.default.min.css') }}">
@@ -86,11 +88,80 @@
     transform: scale(1.1);  /* Efek sedikit membesar pada hover */
 }
 
+/* Navbar toggle */
+.navbar-brand {
+    margin-right: 0;
+}
+
+.navbar-collapse {
+    display: flex; /* Tetap tampil di desktop */
+    justify-content: flex-end;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        display: block;
+        position: fixed; /* Tetapkan posisi fixed untuk overlay */
+        top: 70px;
+        left: 0;
+        height: 65%; /* Membuat dropdown mengambil seluruh tinggi layar */
+        width: 250px; /* Lebar fixed menu */
+        padding: 1rem;
+        background-color: rgba(52, 58, 64, 0.95); /* Warna latar belakang dengan transparansi */
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        transform: translateX(-100%); /* Mulai dari luar sisi kiri layar */
+        opacity: 0; /* Awalnya tidak terlihat */
+        pointer-events: none; /* Cegah interaksi saat tersembunyi */
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        z-index: 1000; /* Pastikan dropdown berada di atas konten lainnya */
+        overflow-y: auto; /* Tambahkan penggulungan vertikal jika konten melebihi tinggi */
+    }
+
+    .navbar-collapse.show {
+        transform: translateX(0); /* Slide masuk ke tampilan dari kiri */
+        opacity: 1; /* Tampilkan dropdown */
+        pointer-events: auto; /* Aktifkan interaksi */
+    }
+
+    .navbar-brand {
+        margin-right: auto;
+    }
+
+    .navbar-nav {
+        margin-left: 0;
+    }
+
+    .navbar-toggler {
+        display: block;
+        z-index: 1100; /* Pastikan ikon toggler tetap di atas dropdown */
+    }
+}
+
+/* Warna ikon toggler default */
+.navbar-toggler i {
+    color: white;
+}
+
+/* Warna ikon dan navbar saat di-scroll */
+.navbar.scrolled .navbar-toggler i {
+    color: black;
+}
+
+.navbar.scrolled {
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+
 
 
     </style>
 </head>
 <body>
+    <!-- loader -->
+		<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
     @include('partials.header')
 
 
@@ -173,6 +244,20 @@ backToTopButton.onclick = function() {
     });
 };
 
+$(document).ready(function() {
+      $('.navbar-toggler').click(function() {
+        $('.navbar-collapse').toggleClass('show');
+      });
+    });
+
+    document.addEventListener('scroll', function() {
+        const navbar = document.getElementById('ftco-navbar');
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
 </script>
 
 
@@ -203,22 +288,6 @@ backToTopButton.onclick = function() {
     CKEDITOR.replace('testimonial');
 </script> --}}
 
-<script>
-    // Example of skipping the ngrok browser warning
-    fetch('https://3bd8-114-10-143-58.ngrok-free.app', {
-        headers: {
-            'ngrok-skip-browser-warning': 'true'
-        }
-    }).then(response => response.text())
-      .then(html => document.write(html));
-
-      fetch('https://3bd8-114-10-143-58.ngrok-free.app', {
-    headers: {
-        'User-Agent': 'MyCustomAgent'
-    }
-});
-
-</script>
 
 
 @include('partials.footer')

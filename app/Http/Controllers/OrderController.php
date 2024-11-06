@@ -7,6 +7,7 @@ use App\Models\Order;
 use Midtrans\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Events\NewOrderCreated;
 
 
 class OrderController extends Controller
@@ -43,6 +44,8 @@ public function process(Request $request)
         'quantity' => $request->quantity,
         'total_price' => $totalPrice,
     ]);
+
+    
 
     // Arahkan ke halaman detail
     return redirect()->route('order.details', $order->id);
