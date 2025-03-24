@@ -92,7 +92,7 @@
  // Fungsi ini akan dipanggil setelah pembayaran selesai
  onSuccess: function(result) {
                 // Arahkan ke halaman order success dengan order_id
-                window.location.href = "/order-success?order_id={{ $order->id }}";
+                window.location.href = "{{ route('order.invoice', ['id' => $order->id]) }}";
             },
             onPending: function(result) {
                 alert('Menunggu Pembayaran!'); // Bisa diarahkan ke halaman menunggu pembayaran

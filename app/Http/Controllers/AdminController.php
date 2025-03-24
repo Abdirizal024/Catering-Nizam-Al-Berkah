@@ -7,6 +7,7 @@ use App\Models\Admin;
 use App\Models\Order;
 use App\Models\Kontaks;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon; // Pastikan ini ada
@@ -19,10 +20,56 @@ class AdminController extends Controller
         $menuCount = Menu::count();
         $orderCount = Order::count();
         $adminCount = Admin::count();
-  $currentAdmin = Auth::guard('admin')->user(); // Mendapatkan admin yang sedang login
+        $pendingOrders = Order::where('status', 'Pending')->count();
+        $successfulOrders = Order::where('status', 'Sudah Dibayar')->count();
+            // Total Pemasukan (order dengan status 'Sudah Dibayar')
+        $pemasukan = Order::where('status', 'Sudah DiBayar')->sum('total_price');
+        // Total Pengeluaran (order dengan status 'cancelled' atau lainnya)
+        $pengeluaran = Order::where('status', 'cancelled')->sum('total_price');
+        $currentAdmin = Auth::guard('admin')->user(); // Mendapatkan admin yang sedang login
 
-        return view('admin.index', compact('menuCount', 'orderCount', 'adminCount', 'currentAdmin'));
+         // Ambil pemasukan per bulan (status 'Sudah Dibayar')
+    $pemasukanBulanan = Order::select(
+        DB::raw("SUM(total_price) as total"),
+        DB::raw("DATE_FORMAT(created_at, '%Y-%m') as bulan")
+    )
+    ->where('status', 'Sudah Dibayar')
+    ->groupBy('bulan')
+    ->orderBy('bulan', 'asc')
+    ->pluck('total', 'bulan')
+    ->toArray();
+
+// Ambil pengeluaran per bulan (status 'cancelled')
+$pengeluaranBulanan = Order::select(
+        DB::raw("SUM(total_price) as total"),
+        DB::raw("DATE_FORMAT(created_at, '%Y-%m') as bulan")
+    )
+    ->where('status', 'cancelled')
+    ->groupBy('bulan')
+    ->orderBy('bulan', 'asc')
+    ->pluck('total', 'bulan')
+    ->toArray();
+
+// Membuat daftar bulan dalam setahun dalam format 'F Y'
+$months = [];
+foreach (range(0, 11) as $i) {
+    $months[] = Carbon::now()->subMonths($i)->format('F Y');
+}
+$months = array_reverse($months);
+
+// Data pemasukan dan pengeluaran diurutkan berdasarkan bulan
+$pemasukanData = [];
+$pengeluaranData = [];
+foreach ($months as $month) {
+    $key = Carbon::parse($month)->format('Y-m');
+    $pemasukanData[] = $pemasukanBulanan[$key] ?? 0;
+    $pengeluaranData[] = $pengeluaranBulanan[$key] ?? 0;
+}
+
+
+        return view('admin.index', compact('menuCount', 'orderCount', 'adminCount', 'currentAdmin', 'pendingOrders', 'successfulOrders', 'pemasukan', 'pengeluaran', 'months', 'pemasukanData', 'pengeluaranData'));
     }
+    
 
 
     public function menu()
@@ -105,7 +152,7 @@ public function data_admin()
     return view('admin.admin', compact('currentAdmin', 'admins'));
 }
 
-    
+
 
 
       // Tampilkan form untuk menambahkan admin baru
@@ -155,7 +202,7 @@ public function data_admin()
 }
 
 
-      
+
 
       // Tampilkan form edit admin
       public function adminEdit($id)
@@ -169,7 +216,7 @@ public function data_admin()
       public function adminUpdate(Request $request, $id)
       {
           $admin = Admin::findOrFail($id);
-      
+
           // Validasi input
           $validatedData = $request->validate([
               'name' => 'required|string|max:255',
@@ -178,12 +225,12 @@ public function data_admin()
               'password' => 'nullable|string|min:8|confirmed',
               'profile_picture' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
           ]);
-      
+
           // Hash password jika ada perubahan password
           if ($request->filled('password')) {
               $validatedData['password'] = Hash::make($request->password);
           }
-      
+
           // Jika ada file gambar baru diupload, hapus gambar lama dan simpan yang baru
           if ($request->hasFile('profile_picture')) {
               if ($admin->profile_picture) {
@@ -192,14 +239,14 @@ public function data_admin()
               $profilePicturePath = $request->file('profile_picture')->store('images', 'public');
               $validatedData['profile_picture'] = $profilePicturePath;
           }
-      
+
           // Update data admin
           $admin->update($validatedData);
-      
+
           // Redirect ke halaman daftar admin dengan pesan sukses
           return redirect()->route('data.admin')->with('success', 'Admin berhasil diperbarui!');
       }
-      
+
 
       // Hapus data admin
       public function destroy($id)
@@ -334,7 +381,7 @@ public function data_admin()
     if (Auth::guard('admin')->check()) {
         return redirect()->route('admin')->with('info', 'Anda sudah login, redirecting to dashboard.');
     }
-    
+
         return view('admin.auth.login');
     }
 
@@ -355,22 +402,25 @@ public function data_admin()
             $admin = Auth::guard('admin')->user();
     
             // Pastikan $admin adalah model Admin
-            if ($admin instanceof Admin) { // Gunakan Admin tanpa namespace lengkap
+            if ($admin instanceof Admin) {
                 $admin->last_login_at = now(); // Simpan waktu login
                 $admin->save(); // Simpan ke database
             } else {
-                // Tindakan alternatif jika $admin bukan model yang diharapkan
+                drakify('error'); // Berikan notifikasi error
                 return back()->withErrors(['loginError' => 'Terjadi kesalahan saat menyimpan data login.']);
             }
     
-            return redirect()->intended(route('admin'))->with('success', 'Berhasil login!');
+            // Berikan notifikasi sukses
+            drakify('success');
+    
+            return redirect()->intended(route('admin'));
         }
     
-        // Jika gagal login
-        return back()->withErrors([
-            'loginError' => 'Username atau password salah!',
-        ]);
+        // Jika login gagal
+        drakify('error');
+        return back()->withErrors(['loginError' => 'Login gagal.']);
     }
+    
 
 
     public function logout()

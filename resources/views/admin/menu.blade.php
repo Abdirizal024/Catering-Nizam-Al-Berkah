@@ -109,12 +109,21 @@
 </div>
 @endsection
 
-
-
+@push('styles')
+   <!-- Tambahkan Toastr CSS -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
+@endpush
 
 @push('scripts')
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+ <!-- Tambahkan Toastr JS -->
+ <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+ <script type="text/javascript">
+  @if (session('success'))
+      toastr.success("{{ session('success') }}");
+  @endif
+</script>
+
 <!-- Bootstrap 4 JS -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
+use App\Models\Order;
 use App\Models\Kontaks;
 use App\Models\Testimoni;
 use Illuminate\Http\Request;
@@ -46,9 +47,9 @@ class DashboardController extends Controller
         // Ambil data menu dari database
         $menus = Menu::all(); // Mengambil semua data menu
         $kontak = Kontaks::first(); // Mengambil nomor kontak
-
-        // Kirim data menu ke view
-        return view('menu', compact('menus', 'kontak'));
+    
+        // Kirim data menu, kontak, dan order ke view
+        return view('menu', compact('menus', 'kontak',));
     }
     
 

@@ -14,7 +14,7 @@
             <!-- Beranda -->
           <li class="nav-item">
               <a href="{{ route('admin') }}" class="nav-link {{ request()->is('admin') ? 'active' : '' }}">
-                  <i class="nav-icon bi bi-house-door"></i> <!-- Beranda: ikon rumah -->
+                  <i class="nav-icon fas fa-tachometer-alt"></i> <!-- Beranda: ikon rumah -->
                   <p>
                       Beranda
                   </p>

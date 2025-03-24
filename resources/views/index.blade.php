@@ -42,7 +42,7 @@
 	<section class="ftco-section ftco-wrap-about ftco-no-pb ftco-no-pt">
 		<div class="container">
 			<div class="row no-gutters">
-				<div class="col-sm-4 p-4 p-md-5 d-flex align-items-center justify-content-center bg-primary">
+				<div class="col-sm-4 p-4 p-md-5 d-flex align-items-center justify-content-center bg-warning">
 					<!-- <form action="#" class="appointment-form">
 						<h3 class="mb-3">Book your Table</h3>
 						<div class="row">
@@ -530,7 +530,7 @@
 					<div class="staff">
 						<div class="img" style="background-image: url(images/chef-4.jpg);"></div>
 						<div class="text px-4 pt-2">
-							<h3>John Gustavo</h3>
+							<h3>J</h3>
 							<span class="position mb-2">CEO, Co Founder</span>
 							<div class="faded">
 								<p>I am an ambitious workaholic, but apart from that, pretty simple person.</p>

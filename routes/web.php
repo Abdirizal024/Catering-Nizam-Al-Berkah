@@ -24,7 +24,7 @@ Route::post('/admin/register', [AdminController::class, 'register_proses'])->nam
 Route::get('/admin/login', [AdminController::class, 'login'])->name('login');
 Route::post('/admin/login', [AdminController::class, 'login_proses'])->name('admin.login');
 Route::middleware(['auth:admin'])->group(function () {
-Route::get('/admin', [AdminController::class, 'index'])->name('admin');
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin');
 Route::get('/admin/profile', [AdminController::class, 'profile'])->name('profile');
 Route::put('/profile/update', [AdminController::class, 'updateProfile'])->name('profile.update');
 Route::put('/profile/password', [AdminController::class, 'updatePassword'])->name('password.update');
@@ -50,6 +50,7 @@ Route::post('/testimoni', [TestimoniController::class, 'store'])->name('testimon
 Route::get('/order/confirm/{id}', [OrderController::class, 'confirm'])->name('order.confirm');
 Route::post('/order/process', [OrderController::class, 'process'])->name('order.process');
 Route::get('/order/details/{id}', [OrderController::class, 'details'])->name('order.details');
+Route::get('/order/invoice/{id}', [OrderController::class, 'invoice'])->name('order.invoice');
 Route::get('/order-success', [OrderController::class, 'orderSuccess'])->name('order.success');
 
 

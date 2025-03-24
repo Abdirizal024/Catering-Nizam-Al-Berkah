@@ -13,6 +13,7 @@
 
   <link rel="icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon">
 
+  @notifyCss
 	</head>
 	<body class="img js-fullheight" style="background-image: url('{{ asset('assets/images/bg.jpg') }}');">
 	<section class="ftco-section">
@@ -60,6 +61,8 @@
 		</div>
 	</section>
 
+  <x-notify::notify />
+  @notifyJs
 	<script src="{{ asset('assets/js/jquery.min.js') }}"></script>
   <script src="{{ asset('assets/js/popper.js') }}"></script>
   <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>

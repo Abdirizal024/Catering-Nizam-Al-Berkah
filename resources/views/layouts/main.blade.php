@@ -27,6 +27,57 @@
 
     @yield('extra_css')
     <style>
+       .invoice-title {
+        display: none;
+    }
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+        #printable-area, #printable-area * {
+            visibility: visible;
+        }
+        #printable-area {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            padding: 20px; /* Tambahkan padding untuk menjauhkan konten dari tepi */
+        }
+        #print-btn, #print-button {
+    display: none !important;
+}
+.invoice-title {
+    display: block;
+    }
+        /* Tambahkan margin kiri dan kanan */
+        @page {
+            margin: 0 2cm;
+        }
+    }
+    #print-btn {
+            display: none;
+        }
+        .print-only {
+            display: block;
+        }
+
+    .invoice-title {
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #333;
+    }
+    /* Tambahkan style untuk tampilan normal */
+    #printable-area {
+        max-width: 800px; /* Batasi lebar maksimum */
+        margin: 0 auto; /* Tengahkan konten */
+        padding: 20px; /* Tambahkan padding */
+    }
+        .icon-spacing {
+        margin-right: 5px; /* Menambah jarak antara ikon dan teks */
+    }
         /* Efek hover pada menu-wrap */
 .menu-wrap {
     border: 1px solid #ddd;
@@ -105,8 +156,8 @@
         position: fixed; /* Tetapkan posisi fixed untuk overlay */
         top: 70px;
         left: 0;
-        height: 65%; /* Membuat dropdown mengambil seluruh tinggi layar */
-        width: 250px; /* Lebar fixed menu */
+        height: 67%; /* Membuat dropdown mengambil seluruh tinggi layar */
+        width: 200px; /* Lebar fixed menu */
         padding: 1rem;
         background-color: rgba(52, 58, 64, 0.95); /* Warna latar belakang dengan transparansi */
         box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
@@ -124,6 +175,10 @@
         pointer-events: auto; /* Aktifkan interaksi */
     }
 
+    .navbar-nav .nav-item {
+        padding-left: 15px; /* Geser teks dropdown ke kanan */
+    }
+
     .navbar-brand {
         margin-right: auto;
     }
@@ -136,6 +191,81 @@
         display: block;
         z-index: 1100; /* Pastikan ikon toggler tetap di atas dropdown */
     }
+}
+
+
+/* Styling untuk tabel */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table th, .table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.table td {
+    background-color: #fff;
+}
+
+.table-bordered {
+    border: 2px solid #ddd;
+}
+
+.table-bordered th, .table-bordered td {
+    border: 1px solid #ddd;
+}
+
+/* Styling untuk tombol */
+button {
+    background-color: #ff5733;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #e04f2a;
+}
+
+/* Styling untuk kolom dan row dalam invoice */
+.card-body {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+.mb-6 {
+    margin-bottom: 30px;
+}
+
+.text-lg {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.bg-orange-400 {
+    background-color: #f56d30;
+}
+
+.text-white {
+    color: white;
+}
+
+.rounded {
+    border-radius: 5px;
 }
 
 /* Warna ikon toggler default */
@@ -153,7 +283,15 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+/* Gaya untuk navbar-collapse saat di-scroll */
+.navbar.scrolled .navbar-collapse {
+    background-color: white; /* Latar belakang dropdown menjadi putih saat di-scroll */
+    color: black; /* Warna teks dropdown menjadi hitam saat di-scroll */
+}
 
+.navbar.scrolled .navbar-nav .nav-link {
+    color: black; /* Teks menu dropdown menjadi hitam */
+}
 
 
 
@@ -252,10 +390,18 @@ $(document).ready(function() {
 
     document.addEventListener('scroll', function() {
         const navbar = document.getElementById('ftco-navbar');
-        if (window.scrollY > 50) {
+        if (window.scrollY > 0) {
             navbar.classList.add('scrolled');
         } else {
             navbar.classList.remove('scrolled');
+        }
+    });
+    // Menangani navbar scroll
+    $(window).scroll(function() {
+        if ($(this).scrollTop() > 0) {
+            $('.navbar').addClass('scrolled');  // Tambahkan kelas saat scroll ke bawah
+        } else {
+            $('.navbar').removeClass('scrolled');  // Hapus kelas saat scroll ke atas
         }
     });
 </script>
@@ -291,6 +437,33 @@ $(document).ready(function() {
 
 
 @include('partials.footer')
+
+
+<script>
+$(document).ready(function() {
+    $("#print-button").on("click", function() {
+        $("#printable-area").printThis({
+            importCSS: true,
+            importStyle: true,
+            loadCSS: "", // Tambahkan CSS khusus untuk mencetak jika diperlukan
+            pageTitle: "",
+            removeInline: false,
+            printDelay: 333,
+            header: null,
+            footer: null,
+            base: false,
+            formValues: true,
+            canvas: true,
+            doctypeString: '<!DOCTYPE html>',
+            removeScripts: false,
+            copyTagClasses: false,
+            beforePrintEvent: null,
+            beforePrint: null,
+            afterPrint: null
+        });
+    });
+});
+    </script>
 
     <!-- JavaScript -->
     <script src="https://cdn.ckeditor.com/ckeditor5/35.3.1/classic/ckeditor.js"></script>

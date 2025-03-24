@@ -13,14 +13,20 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('menu_id')->constrained()->onDelete('cascade'); // Relasi ke tabel menus
+            $table->unsignedBigInteger('menu_id'); // Relasi ke tabel menus
             $table->string('customer_name');
             $table->string('customer_phone');
             $table->string('customer_address');
-            $table->string('status')->default('pending'); // Default status pending
+            $table->string('status')->default('Pending'); // Default status pending
             $table->integer('quantity')->default(1);  // Jumlah item yang dibeli
             $table->decimal('total_price', 15, 2)->nullable();  // Total harga pesanan
+            $table->string('payment_method')->nullable(); // Menyimpan metode pembayaran
+            $table->string('bank')->nullable();
+            $table->string('transaction_id')->nullable(); // Menyimpan ID transaksi Midtrans
+            $table->timestamp('paid_at')->nullable();
             $table->timestamps();
+
+            $table->foreign('menu_id')->references('id')->on('menu')->onDelete('cascade');
         });
     }
 

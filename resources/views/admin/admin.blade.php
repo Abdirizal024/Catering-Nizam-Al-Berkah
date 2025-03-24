@@ -120,6 +120,10 @@
 @endsection
 
 @push('scripts')
+<script>
+  // Display a success toast, with a title
+toastr.success('Have fun storming the castle!', 'Miracle Max Says')
+</script>
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <!-- Bootstrap 4 JS -->

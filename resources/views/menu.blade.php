@@ -24,7 +24,6 @@
                     <h2 class="mb-4">Menu Kami</h2>
                 </div>
             </div>
-
             <!-- Daftar Menu -->
             <div class="row">
                 @foreach($menus as $menu)
